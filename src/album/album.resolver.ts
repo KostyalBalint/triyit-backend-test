@@ -22,6 +22,17 @@ export const albumQueries: QueryResolvers = {
 
     return matchingAlbums.map(albumMapper);
   },
+  album: async (parent, args, context) => {
+    const album = await context.prisma.albums.findUnique({
+      where: { AlbumId: Number(args.id) },
+    });
+
+    if (!album) {
+      throw new Error(`Album with ID ${args.id} not found`);
+    }
+
+    return albumMapper(album);
+  },
 };
 
 export const albumFieldResolvers: AlbumResolvers<
