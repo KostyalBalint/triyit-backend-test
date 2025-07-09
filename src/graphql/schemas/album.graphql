@@ -1,0 +1,13 @@
+type Album {
+  id: ID!
+  title: String!
+  artist: Artist!
+  tracks: [Track!]!
+}
+
+type Query {
+  "Returns albums with at least a 90% match based on the title"
+  albums(title: String): [Album!]!
+  "Retrieves a specific album by its ID"
+  album(id: ID!): Album
+}

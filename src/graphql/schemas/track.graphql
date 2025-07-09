@@ -1,0 +1,15 @@
+type Track {
+  id: ID!
+  name: String!
+  composer: String
+  milliseconds: Int!
+  bytes: Int!
+  price: Float!
+  album: Album!
+  artist: Artist!
+}
+
+type Query {
+  "Retrieves a specific track by its ID"
+  track(id: ID!): Track
+}

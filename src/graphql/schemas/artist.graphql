@@ -1,0 +1,12 @@
+type Artist {
+  id: ID!
+  name: String!
+  albums: [Album!]!
+}
+
+type Query {
+  "Returns artists with at least a 90% match based on the name."
+  artists(name: String): [Artist!]!
+  "Retrieves a specific artist by their ID."
+  artist(id: ID!): Artist
+}
