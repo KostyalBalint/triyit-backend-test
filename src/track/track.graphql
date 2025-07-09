@@ -6,10 +6,9 @@ type Track {
   bytes: Int!
   price: Float!
   album: Album!
-  artist: Artist!
 }
 
-type Query {
+extend type Query {
   "Retrieves a specific track by its ID"
   track(id: ID!): Track
 }

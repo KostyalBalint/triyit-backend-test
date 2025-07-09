@@ -74,7 +74,6 @@ export type QueryTrackArgs = {
 export type Track = {
   __typename?: 'Track';
   album: Album;
-  artist: Artist;
   bytes: Scalars['Int']['output'];
   composer?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
@@ -204,7 +203,6 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
 
 export type TrackResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Track'] = ResolversParentTypes['Track']> = ResolversObject<{
   album?: Resolver<ResolversTypes['Album'], ParentType, ContextType>;
-  artist?: Resolver<ResolversTypes['Artist'], ParentType, ContextType>;
   bytes?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   composer?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;

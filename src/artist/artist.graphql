@@ -4,7 +4,7 @@ type Artist {
   albums: [Album!]!
 }
 
-type Query {
+extend type Query {
   "Returns artists with at least a 90% match based on the name."
   artists(name: String): [Artist!]!
   "Retrieves a specific artist by their ID."
