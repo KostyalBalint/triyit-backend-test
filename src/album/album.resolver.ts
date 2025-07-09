@@ -3,19 +3,24 @@ import { albumMapper } from "./album.mapper";
 import { artistMapper } from "../artist/artist.mapper";
 import { trackMapper } from "../track/track.mapper";
 import { Context } from "../types";
+import { isSimilarityMatch } from "../utils/similarity";
+import { config } from "../config";
 
 export const albumQueries: QueryResolvers = {
   albums: async (parent, args, context) => {
-    return (
-      await context.prisma.albums.findMany({
-        where: {
-          //TODO: Implement a more flexible search
-          Title: {
-            contains: args.title || "",
-          },
-        },
-      })
-    ).map(albumMapper);
+    if (!args.title) {
+      const albums = await context.prisma.albums.findMany();
+      return albums.map(albumMapper);
+    }
+
+    const allAlbums = await context.prisma.albums.findMany();
+    const matchingAlbums = allAlbums.filter(
+      (album) =>
+        album.Title &&
+        isSimilarityMatch(album.Title, args.title, config.similarityThreshold),
+    );
+
+    return matchingAlbums.map(albumMapper);
   },
 };
 

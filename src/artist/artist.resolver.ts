@@ -2,6 +2,8 @@ import { ArtistResolvers, QueryResolvers } from "../generated/graphql";
 import { artistMapper } from "./artist.mapper";
 import { albumMapper } from "../album/album.mapper";
 import { Context } from "../types";
+import { isSimilarityMatch } from "../utils/similarity";
+import { config } from "../config";
 
 export const artistQueries: QueryResolvers = {
   artist: async (_, { id }, { prisma }) => {
@@ -17,16 +19,19 @@ export const artistQueries: QueryResolvers = {
   },
 
   artists: async (_, { name }, { prisma }) => {
-    const artists = await prisma.artists.findMany({
-      where: {
-        //TODO: Implement a more flexible search
-        Name: {
-          contains: name || "",
-        },
-      },
-    });
+    if (!name) {
+      const artists = await prisma.artists.findMany();
+      return artists.map(artistMapper);
+    }
 
-    return artists.map(artistMapper);
+    const allArtists = await prisma.artists.findMany();
+    const matchingArtists = allArtists.filter(
+      (artist) =>
+        artist.Name &&
+        isSimilarityMatch(artist.Name, name, config.similarityThreshold),
+    );
+
+    return matchingArtists.map(artistMapper);
   },
 };
 
