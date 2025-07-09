@@ -1,6 +1,7 @@
 import { artists as PrismaArtist } from "@prisma/client";
 import { Artist as GqlArtist } from "../generated/graphql";
 
+// Maps a Prisma artist object to a GraphQL artist object
 export const artistMapper = (
   artist: PrismaArtist,
 ): GqlArtist & PrismaArtist => {

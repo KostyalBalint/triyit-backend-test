@@ -1,6 +1,7 @@
 import { tracks as PrismaTrack } from "@prisma/client";
 import { Track as GQLTrack } from "../generated/graphql";
 
+// Maps a Prisma track object to a GraphQL track object
 export const trackMapper = (track: PrismaTrack): GQLTrack & PrismaTrack => {
   return {
     ...track,

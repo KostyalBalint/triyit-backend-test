@@ -9,5 +9,3 @@ export const config = {
     .default(0.9)
     .asFloatPositive(),
 };
-
-console.log(config);
