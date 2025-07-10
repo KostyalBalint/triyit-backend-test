@@ -27,6 +27,7 @@
     "@graphql-tools/schema": "^10.0.23",
     "@prisma/client": "^6.11.1",
     "apollo-server-express": "^3.13.0",
+    "dotenv": "^17.2.0",
     "env-var": "^7.5.0",
     "express": "^5.1.0",
     "express-graphql": "^0.12.0",
@@ -42,7 +43,6 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.12",
     "@types/supertest": "^6.0.3",
-    "dotenv": "^17.2.0",
     "jest": "^30.0.4",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
@@ -60,10 +60,8 @@
     "extensionsToTreatAsEsm": [
       ".ts"
     ],
-    "globals": {
-      "ts-jest": {
-        "useESM": true
-      }
+    "transform": {
+      "/*/": ["ts-jest", { "useESM": true }]
     }
   }
 }
