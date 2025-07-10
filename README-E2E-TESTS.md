@@ -27,7 +27,6 @@ yarn db:generate
 Create a `.env.test` file for the E2E tests, and populate it with the following content:
 
 ```env
-DATABASE_PROVIDER="sqlite"
 DATABASE_URL="file:../sample_data/chinook.db"
 PORT=8081
 GQL_PATH="/gql"
