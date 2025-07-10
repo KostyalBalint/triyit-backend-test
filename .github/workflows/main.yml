@@ -20,5 +20,8 @@ jobs:
       - name: Generate Prisma Client
         run: yarn run db:generate
 
+      - name: Use example .env file
+        run: cp .env.example .env
+
       - name: Run tests
         run: yarn test:cov
