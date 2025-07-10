@@ -17,5 +17,8 @@ jobs:
       - name: Install Node.js dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Generate Prisma Client
+        run: yarn run db:generate
+
       - name: Run tests
         run: yarn test:cov
