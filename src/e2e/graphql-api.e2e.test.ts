@@ -1,5 +1,5 @@
 import request from "supertest";
-import { createApp, closeApp, AppInstance } from "../app";
+import { createApp, closeApp, AppInstance } from "../app.js";
 
 describe("GraphQL API E2E Tests", () => {
   let appInstance: AppInstance;

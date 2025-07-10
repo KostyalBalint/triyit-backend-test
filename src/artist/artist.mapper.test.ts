@@ -1,4 +1,4 @@
-import { artistMapper } from "./artist.mapper";
+import { artistMapper } from "./artist.mapper.js";
 
 describe("Artist Mapper", () => {
   it("should map Prisma artist to GraphQL artist", () => {

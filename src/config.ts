@@ -1,7 +1,7 @@
 import pkg from "env-var";
 const { get } = pkg;
 import dotenv from "dotenv";
-import { LogLevel } from "./utils/logger";
+import { LogLevel } from "./utils/logger.js";
 dotenv.config();
 
 export const config = {

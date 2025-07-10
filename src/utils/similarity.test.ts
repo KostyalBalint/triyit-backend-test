@@ -1,4 +1,4 @@
-import { calculateSimilarity, isSimilarityMatch } from "./similarity";
+import { calculateSimilarity, isSimilarityMatch } from "./similarity.js";
 
 describe("Similarity functions", () => {
   describe("calculateSimilarity", () => {

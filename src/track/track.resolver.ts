@@ -1,7 +1,7 @@
-import { QueryResolvers, TrackResolvers } from "../generated/graphql";
-import { trackMapper } from "./track.mapper";
-import { Context } from "../types";
-import { albumMapper } from "../album/album.mapper";
+import { QueryResolvers, TrackResolvers } from "../generated/graphql.js";
+import { trackMapper } from "./track.mapper.js";
+import { Context } from "../types.js";
+import { albumMapper } from "../album/album.mapper.js";
 
 export const trackQueries: QueryResolvers = {
   track: async (parent, args, context) => {

@@ -1,10 +1,10 @@
-import { ArtistResolvers, QueryResolvers } from "../generated/graphql";
-import { artistMapper } from "./artist.mapper";
-import { albumMapper } from "../album/album.mapper";
-import { Context } from "../types";
-import { isSimilarityMatch } from "../utils/similarity";
-import { config } from "../config";
-import { logger } from "../utils/logger";
+import { ArtistResolvers, QueryResolvers } from "../generated/graphql.js";
+import { artistMapper } from "./artist.mapper.js";
+import { albumMapper } from "../album/album.mapper.js";
+import { Context } from "../types.js";
+import { isSimilarityMatch } from "../utils/similarity.js";
+import { config } from "../config.js";
+import { logger } from "../utils/logger.js";
 
 export const artistQueries: QueryResolvers = {
   artist: async (_, { id }, { prisma }) => {

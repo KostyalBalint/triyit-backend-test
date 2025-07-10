@@ -4,8 +4,9 @@
   "main": "src/index.ts",
   "license": "MIT",
   "type": "module",
+  "packageManager": "yarn@1.22.22",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && find src -type f -name '*.graphql' -exec cp --parents {} dist/ \\;",
     "dev": "nodemon -x node --no-warnings --experimental-specifier-resolution=node --loader ts-node/esm src/index.ts",
     "start": "node --es-module-specifier-resolution=node ./dist/index.js",
     "start:prod": "node --es-module-specifier-resolution=node ./dist/index.js",

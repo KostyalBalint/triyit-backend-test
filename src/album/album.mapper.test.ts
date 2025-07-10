@@ -1,4 +1,4 @@
-import { albumMapper } from "./album.mapper";
+import { albumMapper } from "./album.mapper.js";
 
 describe("Album Mapper", () => {
   it("should map Prisma album to GraphQL album", () => {

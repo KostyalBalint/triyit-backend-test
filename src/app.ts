@@ -5,11 +5,11 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { mergeTypeDefs } from "@graphql-tools/merge";
 import path from "path";
 import { fileURLToPath } from "url";
-import { resolvers } from "./resolvers";
+import { resolvers } from "./resolvers.js";
 import { PrismaClient } from "@prisma/client";
-import { Context } from "./types";
-import { config } from "./config";
-import { logger, dbLogger, httpLogger } from "./utils/logger";
+import { Context } from "./types.js";
+import { config } from "./config.js";
+import { logger, dbLogger, httpLogger } from "./utils/logger.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

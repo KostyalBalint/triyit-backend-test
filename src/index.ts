@@ -1,5 +1,5 @@
-import { config } from "./config";
-import { createApp, closeApp } from "./app";
+import { config } from "./config.js";
+import { createApp, closeApp } from "./app.js";
 import { logger } from "./utils/logger.js";
 
 async function startServer() {
@@ -9,14 +9,16 @@ async function startServer() {
     appInstance = await createApp();
     const { app } = appInstance;
 
-    const server = app.listen(config.port, () => {
-      logger.info(
-        `Server listening on: http://localhost:${config.port}${config.gqlPath}`,
-      );
-    }).on('error', (error) => {
-      logger.error("Server failed to start:", error);
-      process.exit(1);
-    });
+    const server = app
+      .listen(config.port, () => {
+        logger.info(
+          `Server listening on: http://localhost:${config.port}${config.gqlPath}`,
+        );
+      })
+      .on("error", (error) => {
+        logger.error("Server failed to start:", error);
+        process.exit(1);
+      });
 
     const gracefulShutdown = async (signal: string) => {
       logger.info(`${signal} received, shutting down gracefully`);
@@ -35,7 +37,6 @@ async function startServer() {
 
     process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
     process.on("SIGINT", () => gracefulShutdown("SIGINT"));
-
   } catch (error) {
     logger.error("Error starting server:", error);
     if (appInstance) {

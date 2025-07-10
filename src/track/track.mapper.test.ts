@@ -1,4 +1,4 @@
-import { trackMapper } from "./track.mapper";
+import { trackMapper } from "./track.mapper.js";
 import { Decimal } from "@prisma/client/runtime/library";
 
 describe("Track Mapper", () => {

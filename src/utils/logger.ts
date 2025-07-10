@@ -1,5 +1,5 @@
 import winston from "winston";
-import { config } from "../config";
+import { config } from "../config.js";
 
 export type LogLevel = "info" | "warn" | "error" | "http" | "debug";
 

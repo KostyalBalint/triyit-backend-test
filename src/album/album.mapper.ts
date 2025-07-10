@@ -1,5 +1,5 @@
 import type { albums as PrismaAlbum } from "@prisma/client";
-import { Album as GqlAlbum } from "../generated/graphql";
+import { Album as GqlAlbum } from "../generated/graphql.js";
 
 // Maps a Prisma album object to a GraphQL album object
 export const albumMapper = (album: PrismaAlbum): GqlAlbum & PrismaAlbum => {

@@ -1,11 +1,11 @@
-import { AlbumResolvers, QueryResolvers } from "../generated/graphql";
-import { albumMapper } from "./album.mapper";
-import { artistMapper } from "../artist/artist.mapper";
-import { trackMapper } from "../track/track.mapper";
-import { Context } from "../types";
-import { isSimilarityMatch } from "../utils/similarity";
-import { config } from "../config";
-import { logger } from "../utils/logger";
+import { AlbumResolvers, QueryResolvers } from "../generated/graphql.js";
+import { albumMapper } from "./album.mapper.js";
+import { artistMapper } from "../artist/artist.mapper.js";
+import { trackMapper } from "../track/track.mapper.js";
+import { Context } from "../types.js";
+import { isSimilarityMatch } from "../utils/similarity.js";
+import { config } from "../config.js";
+import { logger } from "../utils/logger.js";
 
 export const albumQueries: QueryResolvers = {
   albums: async (parent, args, context) => {
