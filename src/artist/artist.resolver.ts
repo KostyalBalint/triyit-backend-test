@@ -4,11 +4,17 @@ import { albumMapper } from "../album/album.mapper";
 import { Context } from "../types";
 import { isSimilarityMatch } from "../utils/similarity";
 import { config } from "../config";
+import { logger } from "../utils/logger";
 
 export const artistQueries: QueryResolvers = {
   artist: async (_, { id }, { prisma }) => {
+    const artistId = parseInt(id, 10);
+    if (isNaN(artistId)) {
+      throw new Error(`Invalid artist ID: ${id}`);
+    }
+
     const artist = await prisma.artists.findUnique({
-      where: { ArtistId: Number(id) },
+      where: { ArtistId: artistId },
     });
 
     if (!artist) {
@@ -40,10 +46,18 @@ export const artistFieldResolvers: ArtistResolvers<
   ReturnType<typeof artistMapper>
 > = {
   albums: async (parent, _, { prisma }) => {
-    const albums = await prisma.albums.findMany({
-      where: { ArtistId: parent.ArtistId },
-    });
+    try {
+      const albums = await prisma.albums.findMany({
+        where: { ArtistId: parent.ArtistId },
+      });
 
-    return albums.map(albumMapper);
+      return albums.map(albumMapper);
+    } catch (error) {
+      logger.error(
+        `Error fetching albums for artist ${parent.ArtistId}:`,
+        error,
+      );
+      throw new Error(`Failed to fetch albums: ${error.message}`);
+    }
   },
 };

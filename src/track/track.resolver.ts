@@ -5,8 +5,13 @@ import { albumMapper } from "../album/album.mapper";
 
 export const trackQueries: QueryResolvers = {
   track: async (parent, args, context) => {
+    const trackId = parseInt(args.id, 10);
+    if (isNaN(trackId)) {
+      throw new Error(`Invalid track ID: ${args.id}`);
+    }
+
     const track = await context.prisma.tracks.findUnique({
-      where: { TrackId: Number(args.id) },
+      where: { TrackId: trackId },
     });
 
     if (!track) {

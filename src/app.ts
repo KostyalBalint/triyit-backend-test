@@ -47,16 +47,36 @@ export async function createApp(): Promise<AppInstance> {
     dbLogger.warn(`Database warning: ${e.message}`);
   });
 
-  logger.info("Loading GraphQL schema files...");
-  const typeDefs = mergeTypeDefs(
-    loadFilesSync(path.join(__dirname, "/**/*.graphql")),
-  );
+  try {
+    await prisma.$connect();
+    logger.info("Database connection established successfully");
+  } catch (error) {
+    logger.error("Failed to connect to database:", error);
+    throw new Error("Database connection failed");
+  }
 
-  logger.debug("Creating executable schema...");
-  const schema = makeExecutableSchema({
-    typeDefs,
-    resolvers,
-  });
+  let typeDefs;
+  try {
+    logger.info("Loading GraphQL schema files...");
+    typeDefs = mergeTypeDefs(
+      loadFilesSync(path.join(__dirname, "/**/*.graphql")),
+    );
+  } catch (error) {
+    logger.error("Failed to load GraphQL schema files:", error);
+    throw new Error("GraphQL schema loading failed");
+  }
+
+  let schema;
+  try {
+    logger.debug("Creating executable schema...");
+    schema = makeExecutableSchema({
+      typeDefs,
+      resolvers,
+    });
+  } catch (error) {
+    logger.error("Failed to create executable schema:", error);
+    throw new Error("GraphQL schema creation failed");
+  }
 
   logger.debug("Setting up Express app...");
   const app = express();
@@ -94,8 +114,13 @@ export async function createApp(): Promise<AppInstance> {
     ],
   });
 
-  await server.start();
-  server.applyMiddleware({ app, path: config.gqlPath });
+  try {
+    await server.start();
+    server.applyMiddleware({ app, path: config.gqlPath });
+  } catch (error) {
+    logger.error("Failed to start Apollo Server:", error);
+    throw new Error("Apollo Server startup failed");
+  }
 
   logger.info("Application setup completed");
   return { app, server, prisma };
