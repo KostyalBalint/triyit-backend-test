@@ -1,6 +1,7 @@
 import pkg from "env-var";
 const { get } = pkg;
 import dotenv from "dotenv";
+import { LogLevel } from "./utils/logger";
 dotenv.config();
 
 export const config = {
@@ -10,4 +11,11 @@ export const config = {
   similarityThreshold: get("SIMILARITY_THRESHOLD")
     .default(0.9)
     .asFloatPositive(),
+  logLevel: get("LOG_LEVEL").asEnum([
+    "error",
+    "http",
+    "info",
+    "debug",
+    "warn",
+  ] as LogLevel[]),
 };

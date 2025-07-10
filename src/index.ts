@@ -1,27 +1,29 @@
 import { config } from "./config";
 import { createApp } from "./app";
+import { logger } from "./utils/logger.js";
 
 async function startServer() {
   try {
+    logger.info("Starting server...");
     const { app } = await createApp();
 
     const server = app.listen(config.port, () => {
-      console.log(
-        `Listening on: http://localhost:${config.port}${config.gqlPath}`,
+      logger.info(
+        `Server listening on: http://localhost:${config.port}${config.gqlPath}`,
       );
     });
 
     process.on("SIGTERM", () => {
-      console.log("SIGTERM received, shutting down gracefully");
+      logger.info("SIGTERM received, shutting down gracefully");
       server.close();
     });
 
     process.on("SIGINT", () => {
-      console.log("SIGINT received, shutting down gracefully");
+      logger.info("SIGINT received, shutting down gracefully");
       server.close();
     });
   } catch (error) {
-    console.error("Error starting server:", error);
+    logger.error("Error starting server:", error);
     process.exit(1);
   }
 }
