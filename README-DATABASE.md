@@ -1,10 +1,11 @@
 # Database Setup
 
-This project supports both SQLite (for development) and PostgreSQL (for production).
+This project can supports both SQLite and PostgreSQL.
 
 ## Current Setup: SQLite
 
 The project is currently configured to use the Chinook SQLite database located at `sample_data/chinook.db`.
+I used SQLite primarily because the test database is available as the above mentioned file, and it is easier to set up for development and testing purposes.
 
 ### Available Commands
 

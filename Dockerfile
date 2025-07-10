@@ -1,5 +1,5 @@
 # ⚒ Build the builder image
-FROM node:18-bullseye as builder
+FROM node:18 AS builder
 
 # 🤫 Silence npm
 ENV NPM_CONFIG_LOGLEVEL=error
@@ -9,23 +9,25 @@ WORKDIR /code
 
 # 👇 Copy config files and source
 COPY package*.json tsconfig.json ./
+COPY prisma ./prisma/
+COPY sample_data ./sample_data/
+COPY src ./src
 
 # 👇 Install deps and build source
-RUN npm config set unsafe-perm true
 RUN npm ci
 
-COPY src ./src
+RUN npm run db:generate
 RUN npm run build
 
-FROM builder as prodbuild
+FROM builder AS prodbuild
 # 👇 Delete dev deps as they are no longer needed
 RUN npm prune --production
 
 # 🚀 Build the runner image
-FROM node:18-bullseye-slim as runner
+FROM node:18-slim AS runner
 
 # Add openssl and tini
-RUN apt-get -qy update && apt-get -qy install openssl tini
+RUN apt -qy update && apt -qy install openssl tini
 
 # Tini is now available at /sbin/tini
 ENTRYPOINT ["/usr/bin/tini", "--"]
