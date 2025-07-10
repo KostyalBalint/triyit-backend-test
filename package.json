@@ -6,7 +6,7 @@
   "type": "module",
   "packageManager": "yarn@1.22.22",
   "scripts": {
-    "build": "tsc && find src -type f -name '*.graphql' -exec cp --parents {} dist/ \\;",
+    "build": "tsc && find src -type f -name '*.graphql' -print0 | while IFS= read -r -d $'\\0' file; do \\\n    relativePath=\"${file#src/}\"; \\\n    mkdir -p \"dist/$(dirname \"$relativePath\")\"; \\\n    cp \"$file\" \"dist/$relativePath\"; \\\ndone",
     "dev": "nodemon -x node --no-warnings --experimental-specifier-resolution=node --loader ts-node/esm src/index.ts",
     "start": "node --es-module-specifier-resolution=node ./dist/index.js",
     "start:prod": "node --es-module-specifier-resolution=node ./dist/index.js",
@@ -62,6 +62,9 @@
     "extensionsToTreatAsEsm": [
       ".ts"
     ],
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    },
     "transform": {
       "/*/": [
         "ts-jest",
